@@ -24,6 +24,7 @@
     "build:electron:main": "tsc main.ts --outDir dist && copyfiles package.json dist && cd dist && npm install --prod && cd ..",
     "build": "webpack --display-error-details && npm run build:electron:main",
     "build:prod": "cross-env NODE_ENV=production npm run build",
+    "clean": "rimraf dist coverage",
     "electron:serve": "npm run build:electron:main && electron ./dist --serve",
     "electron:test": "electron ./dist",
     "electron:dev": "npm run build && electron ./dist",
@@ -32,8 +33,9 @@
     "electron:windows": "npm run build:prod && node package.js --asar --platform=win32 --arch=ia32",
     "electron:mac": "npm run build:prod && node package.js --asar --platform=darwin --arch=x64",
     "test": "karma start ./karma.conf.js",
-    "pree2e": "webdriver-manager update --standalone false --gecko false --quiet && npm run build",
-    "e2e": "protractor ./protractor.conf.js"
+    "pree2e": "webdriver-manager update --proxy http://70.10.15.10:8080 --standalone false --gecko false --quiet && npm run build",
+    "e2e": "protractor ./protractor.conf.js",
+    "coverage": "rimraf coverage && ng test -cc"
   },
   "dependencies": {
     "@angular/common": "4.4.3",
@@ -46,6 +48,7 @@
     "@angular/router": "4.4.3",
     "core-js": "2.4.1",
     "enhanced-resolve": "3.3.0",
+    "primeng": "^4.2.1",
     "rxjs": "5.4.3",
     "zone.js": "0.8.17"
   },
